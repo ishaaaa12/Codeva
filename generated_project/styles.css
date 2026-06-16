@@ -1,0 +1,245 @@
+/*
+ * styles.css – Core styling and responsive layout for SimpleTodoApp
+ * ---------------------------------------------------------------
+ * This stylesheet defines:
+ *   • CSS custom properties (variables) for colors, spacing and fonts.
+ *   • Global body styling – centering, background, and a mobile‑first font stack.
+ *   • Layout and visual styling for the #todo-app container.
+ *   • Input section styling for the new‑task input and add‑button.
+ *   • Task list layout and individual task item appearance.
+ *   • State modifiers: .completed, .editing, .active (filter buttons).
+ *   • Accessibility focus outlines.
+ *   • Responsive adjustments for viewports ≤ 600px.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* 1. CSS Variables – centralised design tokens                               */
+/* -------------------------------------------------------------------------- */
+:root {
+  /* Colours */
+  --color-primary: #4a90e2;          /* main accent colour */
+  --color-background: #f5f7fa;      /* page background */
+  --color-surface: #ffffff;         /* card / container background */
+  --color-text: #333333;            /* primary text */
+  --color-muted: #777777;           /* secondary / disabled text */
+  --color-border: #e0e0e0;          /* subtle borders */
+  --color-shadow: rgba(0, 0, 0, 0.1);
+
+  /* Spacing */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-size-base: 1rem;            /* 16px */
+  --font-size-lg: 1.125rem;          /* 18px */
+  --font-size-sm: 0.875rem;          /* 14px */
+  --line-height-base: 1.5;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Global body styling                                                    */n/* -------------------------------------------------------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* start at top but centered horizontally */
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Main application container (#todo-app)                                 */n/* -------------------------------------------------------------------------- */
+#todo-app {
+  width: 100%;
+  max-width: 480px;
+  margin: var(--space-lg) auto;
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  border-radius: var(--space-xs);
+}
+
+#todo-app h1 {
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-lg);
+  text-align: center;
+  color: var(--color-primary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Input section – text field and add button                              */n/* -------------------------------------------------------------------------- */
+.input-section {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+#new-task-input {
+  flex: 1 1 auto;
+  padding: var(--space-sm) var(--space-xs);
+  font-size: var(--font-size-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--space-xs);
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+#new-task-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+#add-task-btn {
+  flex: 0 0 auto;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-base);
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--space-xs);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#add-task-btn:hover {
+  background-color: #357ab8; /* slightly darker */
+}
+
+#add-task-btn:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. Task list layout                                                       */n/* -------------------------------------------------------------------------- */
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-xs);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.2s ease;
+}
+
+.task-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* The label that shows the task text – we assume the markup uses a <span class="task-label"> */
+.task-label {
+  flex: 1 1 auto;
+  margin-right: var(--space-sm);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. State modifiers                                                        */n/* -------------------------------------------------------------------------- */
+.completed .task-label {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+
+.editing .task-label {
+  display: none;
+}
+
+.editing input.edit-input {
+  flex: 1 1 auto;
+  padding: var(--space-xs);
+  font-size: var(--font-size-base);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--space-xs);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 7. Filter bar – buttons                                                   */n/* -------------------------------------------------------------------------- */
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-lg);
+}
+
+.filter-btn {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-sm);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--space-xs);
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: var(--color-border);
+}
+
+.filter-btn.active {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.filter-btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 8. Footer styling                                                         */n/* -------------------------------------------------------------------------- */
+.footer {
+  margin-top: var(--space-lg);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 9. Responsive adjustments – mobile first (≤ 600px)                       */n/* -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  body {
+    font-size: var(--font-size-sm);
+  }
+
+  #todo-app {
+    margin: var(--space-sm);
+    padding: var(--space-sm);
+  }
+
+  .input-section {
+    flex-direction: column;
+  }
+
+  #add-task-btn {
+    width: 100%;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+  }
+
+  .filter-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

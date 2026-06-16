@@ -1,6 +1,6 @@
-# 🛠️ Coder Buddy
+# 🛠️ Codeva
 
-**Coder Buddy** is an AI-powered coding assistant built with [LangGraph](https://github.com/langchain-ai/langgraph).  
+**Codeva** is an AI-powered coding assistant built with [LangGraph](https://github.com/langchain-ai/langgraph).  
 It works like a multi-agent development team that can take a natural language request and transform it into a complete, working project — file by file — using real developer workflows.
 
 ---
@@ -37,5 +37,3 @@ Now that we are done with all the set-up & installation steps we can start the a
 - Create a simple calculator web application.
 - Create a simple blog API in FastAPI with a SQLite database.
 
----
-Copyright©️ Codebasics Inc. All rights reserved.
